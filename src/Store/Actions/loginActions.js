@@ -7,7 +7,6 @@ export const userLogin = (email, password) => {
       username: email,
       password,
     },
-    // loading: true,
   };
 };
 
@@ -22,5 +21,11 @@ export const userLoginFailure = (error) => {
   return {
     type: types.LOGIN_FAILURE,
     payload: error,
+  };
+};
+
+export const logout = () => {
+  return {
+    type: types.LOGOUT,
   };
 };
