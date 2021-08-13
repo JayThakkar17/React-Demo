@@ -29,3 +29,11 @@ export const storeToken = async (token) => {
 export const logout = () => {
   localStorage.removeItem('accessToken');
 };
+
+export const setRoleName = (roleName) => {
+  return sessionStorage.setItem('roleName', roleName);
+};
+
+export const getRoleName = () => {
+  return sessionStorage.getItem('roleName');
+};

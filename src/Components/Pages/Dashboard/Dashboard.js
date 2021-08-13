@@ -1,11 +1,8 @@
 import React from 'react';
+import AuthUser from '../../HOC/AuthUser';
 
 function Dashboard() {
-  return (
-    <div>
-      <h1 style={{ marginLeft: '40%' }}>Dashboard Page</h1>
-    </div>
-  );
+  return <h1>Dashboard Page</h1>;
 }
 
-export default Dashboard;
+export default AuthUser(Dashboard);

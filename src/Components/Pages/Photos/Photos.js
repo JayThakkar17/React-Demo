@@ -1,11 +1,8 @@
 import React from 'react';
+import AuthUser from '../../HOC/AuthUser';
 
 function Photos() {
-  return (
-    <div>
-      <h1 style={{ marginLeft: '40%' }}>Photos</h1>
-    </div>
-  );
+  return <h1>Photos</h1>;
 }
 
-export default Photos;
+export default AuthUser(Photos);

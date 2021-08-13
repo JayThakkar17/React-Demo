@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Col, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Col, Form, FormGroup, Input } from 'reactstrap';
 import { userLogin } from '../../Store/Actions/loginActions';
 import { useHistory } from 'react-router-dom';
 
@@ -8,28 +8,43 @@ import logo from '../../Assets/Images/logo.jpeg';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Login.css';
-import { authToken, isLoggedIn } from '../../Utils/login';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passError, setPassError] = useState('');
+  const [error, setError] = useState('');
 
   const dispatch = useDispatch();
   const history = useHistory();
 
   const loginStore = useSelector((state) => state.login);
   const { response } = loginStore;
-  // console.log(response);
+
+  useEffect(() => {
+    if (response.accessToken) {
+      history.push('/dashboard');
+    }
+  }, [history, response.accessToken]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(userLogin(email, password));
-    if (response.statusCode === 200) {
-      history.push('/layout');
+    if (email === '' && password === '') {
+      setError("Field can't be empty");
+      setPassError('');
+      setEmailError('');
+    } else if (email === '') {
+      setPassError("Email can't be empty");
+      setError('');
+    } else if (password === '') {
+      setEmailError("Password can't be empty");
+      setError('');
+    } else {
+      dispatch(userLogin(email, password));
     }
   };
 
-  console.log('response.statusCode', response.statusCode);
   return (
     <Form className='container'>
       <FormGroup>
@@ -37,9 +52,8 @@ function Login() {
       </FormGroup>
 
       <FormGroup row>
-        <Label for='exampleEmail' sm={2}>
-          Email
-        </Label>
+        <legend>Email</legend>
+
         <Col sm={10} />
         <Input
           value={email}
@@ -48,12 +62,15 @@ function Login() {
           name='email'
           placeholder='Enter Your Email'
         />
+        <div style={{ color: 'red' }}>
+          {error}
+          {passError}
+        </div>
       </FormGroup>
 
       <FormGroup row>
-        <Label for='examplePassword' sm={2}>
-          Password
-        </Label>
+        <legend sm={2}>Password</legend>
+
         <Col sm={10} />
         <Input
           value={password}
@@ -62,6 +79,10 @@ function Login() {
           name='password'
           placeholder='Enter Your Password'
         />
+        <div style={{ color: 'red' }}>
+          {error}
+          {emailError}
+        </div>
       </FormGroup>
       <br />
       <button

@@ -1,8 +1,10 @@
 import axios from 'axios';
 
+const BASE_URL = 'http://localhost:4000';
+
 export const getLoginAPI = (action) => {
   return axios
-    .post('http://localhost:4000/auth/login', action)
+    .post(`${BASE_URL}/auth/login`, action)
     .then((res) => {
       return res.data;
     })

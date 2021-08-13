@@ -33,10 +33,10 @@ const loginReducer = (state = initialState, action) => {
     case types.LOGOUT:
       return {
         ...state,
-        error: "",
+        error: '',
         loading: false,
         response: [],
-      }
+      };
     default:
       return state;
   }

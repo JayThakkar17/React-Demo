@@ -1,15 +1,15 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import * as types from '../Constants/ActionTypes';
 import { getLoginAPI } from '../Api';
-import swal from 'sweetalert';
-import { userLoginFailure, userLoginSuccess } from '../Actions/loginActions';
+import { userLoginFailure } from '../Actions/loginActions';
 import { setName, storeToken } from '../../Utils/login';
+import swal from 'sweetalert';
 
 function* userLogin(action) {
   try {
     let user = yield call(getLoginAPI, action.payload);
     if (user.statusCode === 200) {
-      yield put(userLoginSuccess(user));
+      yield put({ type: types.LOGIN_SUCCESS, payload: user });
       yield call(storeToken, user.accessToken);
       yield call(setName, user.user.firstName);
     }

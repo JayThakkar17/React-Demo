@@ -1,15 +1,24 @@
 import React, { useState } from 'react';
+import { Route, Switch, Link, useHistory } from 'react-router-dom';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
-import { Link, useHistory } from 'react-router-dom';
-import { SidebarData } from '../Sidebar/SidebarData';
 import { IconContext } from 'react-icons';
-
-import './Layout.css';
 import { useDispatch } from 'react-redux';
+
+import { SidebarData } from '../Sidebar/SidebarData';
+import Dashboard from '../Pages/Dashboard/Dashboard';
+import Home from '../Pages/Home/Home';
+import Photos from '../Pages/Photos/Photos';
+import Roles from '../Pages/Roles/Roles';
+import CreateNewUser from '../../Components/User/CreateNew/CreateNewUser';
+import UpdateRole from '../../Components/User/UpdateRole/UpdateRole';
+import AuthUser from '../HOC/AuthUser';
+
 import { logout } from '../../Store/Actions/loginActions';
 
-function Dashboard() {
+import './Layout.css';
+
+function Layout() {
   const [sidebar, setSidebar] = useState(false);
 
   const showSidebar = () => setSidebar(!sidebar);
@@ -19,7 +28,7 @@ function Dashboard() {
   const logoutHandler = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('firstName');
-    // dispatch(logout());
+    dispatch(logout());
     history.push('/login');
   };
 
@@ -61,9 +70,18 @@ function Dashboard() {
             </button>
           </ul>
         </nav>
+
+        <Switch>
+          <Route exact path='/home' component={Home} />
+          <Route exact path='/photos' component={Photos} />
+          <Route exact path='/dashboard' component={Dashboard} />
+          <Route exact path='/roles' component={Roles} />
+          <Route exact path='/roles/create' component={CreateNewUser} />
+          <Route exact path='/roles/update/:id' component={UpdateRole} />
+        </Switch>
       </IconContext.Provider>
     </>
   );
 }
 
-export default Dashboard;
+export default AuthUser(Layout);
