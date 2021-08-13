@@ -15,7 +15,7 @@ function UpdateRole(props) {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const getIdStore = useSelector((state) => state.getRoleId.roleNameArray);
+  const getNameById = useSelector((state) => state.getRoleId.roleNameArray);
 
   useEffect(() => {
     setId(props.match.params);
@@ -23,8 +23,8 @@ function UpdateRole(props) {
   }, [props.match.params, dispatch]);
 
   useEffect(() => {
-    setRoleName(getIdStore);
-  }, [getIdStore]);
+    setRoleName(getNameById);
+  }, [getNameById]);
 
   const updateHandler = (e) => {
     e.preventDefault();
